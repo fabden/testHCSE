@@ -14,8 +14,17 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "postinstall": "nuxt prepare",
-    "preview": "nuxt preview"
+    "preview": "nuxt preview",
+    "test": "vitest"
   },
   "type": "module",
-  "version": "0.1.0"
+  "version": "0.1.0",
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.4",
+    "@vue/test-utils": "^2.4.11",
+    "happy-dom": "^20.10.6",
+    "jsdom": "^29.1.1",
+    "vite": "^5.4.21",
+    "vitest": "^3.2.4"
+  }
 }
