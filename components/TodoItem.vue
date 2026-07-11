@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import moment from 'moment';
 import { useStore } from 'vuex';
 
 const store = useStore();
@@ -28,31 +27,10 @@ function onToggle() {
   store.commit('TOGGLE_TODO', props.todo.id);
 }
 
-function onDelete() {
+async function onDelete() {
   if (!props.todo?.id) return;
 
-  console.log(
-    'onDelete appelé à',
-    moment().format('HH:mm:ss'),
-    'pour todo:',
-    props.todo.id,
-  );
-
-  try {
-    fetch(`/api/todos/${props.todo.id}`, {
-      method: 'DELETE',
-    })
-      .then((res) => {
-        console.log("réponse DELETE de l'API, status:", res.status);
-        store.commit('DELETE_TODO', props?.todo?.id);
-      })
-      .catch((e) => console.log('erreur lors du DELETE API:', e));
-  } catch (e) {
-    console.log(
-      'catch externe inutile (fetch retourne une Promise, pas throw):',
-      e,
-    );
-  }
+  await store.dispatch('deleteTodo', props.todo.id);
 }
 </script>
 

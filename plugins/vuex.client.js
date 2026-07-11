@@ -145,6 +145,30 @@ const store = createStore({
       commit('SET_TODOS', []);
       await dispatch('fetchTodos');
     },
+
+  async deleteTodo({ commit }, id) {
+  if (!id) return;
+
+  commit('SET_LOADING', true);
+  commit('SET_ERROR', null);
+
+  try {
+    const res = await fetch(`/api/todos/${id}`, {
+      method: 'DELETE',
+    });
+
+    if (!res.ok) {
+      throw new Error(`Erreur lors de la suppression : ${res.status}`);
+    }
+
+    commit('DELETE_TODO', id);
+  } catch (e) {
+    console.log('Erreur lors du DELETE API :', e);
+    commit('SET_ERROR', e.message);
+  } finally {
+    commit('SET_LOADING', false);
+  }
+},
   },
 });
 
