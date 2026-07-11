@@ -24,8 +24,14 @@ const completedCount = computed(() => store.getters.completedCount);
 const lastUpdatedFormatted = computed(() => store.getters.lastUpdatedFormatted);
 
 const todayFormatted = computed(() => {
-  console.log('computed todayFormatted recalculé');
-  return moment().format('dddd D MMMM YYYY');
+  const date = new Intl.DateTimeFormat('fr-FR', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }).format(new Date());
+
+  return date.charAt(0).toUpperCase() + date.slice(1);
 });
 
 const todosWithFormattedDates = computed(() => {
