@@ -17,13 +17,6 @@ const props = defineProps<{ todo?: TodoItem }>();
 function onToggle() {
   if (!props.todo) return;
 
-  console.log(
-    'onToggle appelé pour todo id:',
-    props.todo.id,
-    'état:',
-    props.todo.completed,
-  );
-
   store.commit('TOGGLE_TODO', props.todo.id);
 }
 
@@ -36,13 +29,10 @@ async function onDelete() {
 
 <template>
   <div
-    class="todo-item"
-    :style="{
-      border: props.todo?.completed
-        ? '1px solid #c3e6cb'
-        : '1px solid #dee2e6',
-      backgroundColor: props.todo?.completed ? '#d4edda' : '#ffffff',
-    }"
+    :class="[
+      'todo-item',
+      props.todo?.completed ? 'todo-item--completed' : 'todo-item--active',
+    ]"
   >
     <input
       :checked="props.todo?.completed"
@@ -53,11 +43,10 @@ async function onDelete() {
 
     <span
       v-if="props.todo?.text"
-      class="todo-text"
-      :style="{
-        textDecoration: props.todo?.completed ? 'line-through' : 'none',
-        opacity: props.todo?.completed ? 0.5 : 1,
-      }"
+      :class="[
+        'todo-text',
+        { 'todo-text--completed': props.todo?.completed },
+      ]"
     >
       {{ props.todo.text }}
     </span>
@@ -81,12 +70,24 @@ async function onDelete() {
   align-items: center;
   padding: 12px 15px;
   margin: 6px 0;
+  border: 1px solid #dee2e6;
   border-radius: 6px;
+  background: #fff;
   transition: all 0.2s ease;
 }
 
 .todo-item:hover {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.todo-item--completed {
+  border-color: #c3e6cb;
+  background-color: #d4edda;
+}
+
+.todo-item--active {
+  border-color: #dee2e6;
+  background-color: #fff;
 }
 
 .todo-checkbox {
@@ -100,9 +101,14 @@ async function onDelete() {
   flex: 1;
 }
 
+.todo-text--completed {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
 .todo-date {
-  color: #aaa;
   margin: 0 10px;
+  color: #aaa;
   font-size: 11px;
   white-space: nowrap;
 }
