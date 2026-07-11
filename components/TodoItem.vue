@@ -54,14 +54,6 @@ function onDelete() {
     );
   }
 }
-
-function getDisplayText(text:string):string {
-  return _.capitalize(_.trim(text));
-}
-
-function getFormattedDate() {
-  return moment(props?.todo?.createdAt).format('LLLL');
-}
 </script>
 
 <template>
