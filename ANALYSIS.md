@@ -18,6 +18,7 @@
 | Utilisation de `v-model` sur un `<input type="checkbox">` alors qu'il n'est pas nécessaire. | Utiliser `:checked` et `@change`. |
 | Les erreurs HTTP (404, 500, etc.) ne sont pas correctement gérées après les appels API. | Vérifier `response.ok` et mettre en place une gestion centralisée des erreurs. |
 | Les conventions de code ne sont pas homogènes. | Mettre en place **ESLint** et **Prettier** pour uniformiser le code et détecter automatiquement certaines erreurs. |
+| Utilisation inutile de Lodash | Supprimer la dépendance et utiliser les méthodes natives de JavaScript (`map`, `filter`, `find`, `reduce`, etc.). |
 
 # Test de l'app
 
