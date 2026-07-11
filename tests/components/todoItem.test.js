@@ -4,6 +4,7 @@ import TodoItem from '../../components/TodoItem.vue';
 
 const store = vi.hoisted(() => ({
   commit: vi.fn(),
+  dispatch: vi.fn(),
 }));
 
 vi.mock('vuex', () => ({
@@ -32,15 +33,8 @@ function mountTodoItem(options = {}) {
 describe('TodoItem', () => {
   beforeEach(() => {
     store.commit.mockClear();
+    store.dispatch.mockClear();
     vi.spyOn(console, 'log').mockImplementation(() => {});
-    vi.stubGlobal(
-      'fetch',
-      vi.fn(() =>
-        Promise.resolve({
-          status: 200,
-        }),
-      ),
-    );
   });
 
   it('displays the todo text and date', () => {
@@ -66,7 +60,7 @@ describe('TodoItem', () => {
     expect(store.commit).toHaveBeenCalledWith('TOGGLE_TODO', 'todo_1');
   });
 
-  it('calls the API then removes the todo from the store', async () => {
+  it('dispatches the delete action when the delete button is clicked', async () => {
     const wrapper = mountTodoItem({
       props: {
         todo,
@@ -74,12 +68,8 @@ describe('TodoItem', () => {
     });
 
     await wrapper.find('button').trigger('click');
-    await vi.waitFor(() => {
-      expect(fetch).toHaveBeenCalledWith('/api/todos/todo_1', {
-        method: 'DELETE',
-      });
-      expect(store.commit).toHaveBeenCalledWith('DELETE_TODO', 'todo_1');
-    });
+
+    expect(store.dispatch).toHaveBeenCalledWith('deleteTodo', 'todo_1');
   });
 
   it('does nothing when no todo is provided', async () => {
@@ -89,6 +79,6 @@ describe('TodoItem', () => {
     await wrapper.find('button').trigger('click');
 
     expect(store.commit).not.toHaveBeenCalled();
-    expect(fetch).not.toHaveBeenCalled();
+    expect(store.dispatch).not.toHaveBeenCalled();
   });
 });
