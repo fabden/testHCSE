@@ -7,7 +7,7 @@ import _ from 'lodash';
 const store = useStore();
 
 const welcomeMessage = ref(
-  '<b>Bienvenue sur <i>Ma Super Todo App</i> !</b> Gérez vos tâches facilement.',
+  '<b>Bienvenue sur <i>Ma Super Todo App de Fabrice DENNEMONT</i> !</b> Gérez vos tâches facilement.',
 );
 const appVersion = ref('1.0.0');
 
@@ -58,8 +58,8 @@ async function onReloadDirect() {
     const res = await fetch('/api/todos');
     const data = await res.json();
     console.log('données rechargées directement:', data);
-    _.each(data, (item) => {
-      store.commit('ADD_TODO', item.title);
+    data.forEach(() => {
+      store.commit('SET_TODOS', data);
     });
   } catch (e) {
     console.log('erreur dans onReloadDirect:', e);
