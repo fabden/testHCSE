@@ -26,3 +26,4 @@
 - Des erreurs apparaissent dans la console concernant les routes API server/api/todos/[id].js.
 - Une erreur indique dans la console que jQuery n’est pas chargé.
 - Les dates sont affichées en anglais au lieu du français.
+- Apres quelques fix, pourquoi deux boutons sur l'interface'reload direct' et 'recharger depuis l API',elles ont les meme focntion  
